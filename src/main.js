@@ -32,16 +32,26 @@ import { Application, Assets, Sprite, Graphics, SCALE_MODES, Rectangle, BlurFilt
 
     circle.filters = [new BlurFilter(blurSize)];
 
-    const circleTarget = new Graphics().circle(965, 795, 10).fill({ color: 'red' });
+    const circleTarget = new Graphics().circle(0, 0, 10).fill({ color: 'red' });
+    circleTarget.visible = false
     app.stage.addChild(circleTarget)
-    const textTarget = new Text("Find Koumoul !", {
+    const textTarget = new Text("", {
         fontSize: 50,
         fill: 'white',
         align: 'left',
     })
-
     textTarget.position.set(50, 200);
     app.stage.addChild(textTarget);
+
+    const textBravo = new Text("Bravo !!", {
+        fontSize: 500,
+        fill: 'blue',
+        align: 'left',
+    })
+
+    textBravo.position.set(50, 80);
+    app.stage.addChild(textBravo);
+    textBravo.visible = false
 
     const bounds = new Rectangle(0, 0, (radius + blurSize) * 2, (radius + blurSize) * 2);
     const texture = app.renderer.generateTexture({
@@ -64,8 +74,33 @@ import { Application, Assets, Sprite, Graphics, SCALE_MODES, Rectangle, BlurFilt
         focus.position.x = event.global.x - focus.width / 2;
         focus.position.y = event.global.y - focus.height / 2;
         background.position.x = 500
-        // cercleRouge.position.x = 500
-        // cercleRouge.position.y = 100
+        
+        const diffX = Math.abs(circleTarget.position.x - event.global.x)
+        const diffY = Math.abs(circleTarget.position.y - event.global.y)
 
+        if (diffX < 50 && diffY < 50) {
+            index = index + 1
+            if (index === data.length) {
+                textTarget.visible = false
+                textBravo.visible = true
+            } else {
+                showData()
+            }
+             
+             
+             
+        }
     });
+
+    let index = 0
+    const data = [{name: 'Bureau Koumoul', x: 967, y: 750}, {name: 'Feten Hont', x: 1165, y: 440}, {name: 'Le Pressoir', x:900, y:525}, {name: 'BARRAVEL', x: 1052, y: 797}]
+
+    function showData () {
+        const item = data[index]
+        textTarget.text = "Cherche " + item.name
+        circleTarget.visible = true
+        circleTarget.position.x = item.x
+        circleTarget.position.y = item.y
+    }
+    showData()
 })();
