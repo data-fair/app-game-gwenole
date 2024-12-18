@@ -18,7 +18,7 @@ import { Application, Assets, Sprite, Graphics, SCALE_MODES, Rectangle, BlurFilt
 
     // Load the grass texture
     const grassTexture = await Assets.load('/saint avé map.png');
-    const cercleRouge = await Assets.load('pngegg(1).png');
+    // const cercleRouge = await Assets.load('/pngegg(1).png');
 
     // Create the grass background
     const background = new Sprite(grassTexture);
